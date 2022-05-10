@@ -11507,11 +11507,23 @@ body {
     background-color: transparent;
     transition: background-color 0.3s ease-in-out;
   }
+  
   #mainNav .navbar-brand {
+    padding: 0.5rem 0;
+    color: black;
+  }
+
+  #mainNav .landing-brand {
     padding: 0.5rem 0;
     color: rgba(255, 255, 255, 0.5);
   }
+
   #mainNav .nav-link {
+    transition: none;
+    padding: 2rem 1.5rem;
+    color: black;
+  }
+  #mainNav .landing-nav  {
     transition: none;
     padding: 2rem 1.5rem;
     color: rgba(255, 255, 255, 0.5);
