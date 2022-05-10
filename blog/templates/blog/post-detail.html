@@ -40,11 +40,14 @@
                         <img class="card-img-top banner" src="{{ object.imagen_banner }}" alt="Card image cap">
                         <div class="card-body">
                             <div class="card-title">{{ object.titulo }}</div>
-                            <div class="d-flex h-100 flex-wrap justify-content-around pb-2 pt-4">
-                                {{ object.content | safe }}
+                            <div class=" h-100 flex-wrap  pb-2 pt-4">                                
+                                    {{ object.content | safe }}
                             </div>
                         </div>
                         <div class="card-footer">
+                            <blockquote class="blockquote mb-0">
+                                <footer class="blockquote-footer"><cite title="Source Title">{{ object.autor }}</cite></footer>
+                              </blockquote>
                             {% if request.user.is_authenticated %}
                             <div>
                                 <a class="btn btn-primary" href="{% url 'post-update' slug=object.slug %}">Editar</a>
