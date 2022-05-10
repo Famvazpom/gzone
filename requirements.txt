@@ -14,3 +14,4 @@ djangorestframework
 django-tinymce
 django-widget-tweaks
 django_resized
+django-cleanup
