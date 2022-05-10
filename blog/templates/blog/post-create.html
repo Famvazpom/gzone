@@ -1,0 +1,81 @@
+{% extends '../layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+
+{% block stylesheets %}
+    {{ form.media }}
+{% endblock stylesheets %}
+{% block content %}
+
+<div class="content">
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">Crear Post</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="{% url 'home' %}">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="{% url 'post-list' %}">Blog</a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Crear Post</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form method='POST'>
+                    
+                    {% csrf_token %}
+                    {% for hidden_field in form.hidden_fields %}
+                        {{ hidden_field }}
+                    {% endfor %}
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Crear Post</div>
+                        </div>
+                        <div class="card-body">
+                            {% for field in form.visible_fields %}
+                            <div class="row">
+                                <div class="col-lg">
+                                    <div class="form-group">
+                                        {{ field.label_tag }}
+
+                                        {% render_field field class='form-control' %}
+                                        {% if field.help_text %}
+                                            <small class="form-text text-muted">{{ field.help_text }}</small>
+                                        {% endif %}
+                                        {%if form.errors %}
+                                            {% for error in field.errors %}
+                                                    <div class="alert alert-danger">
+                                                        <strong>{{ error|escape }}</strong>
+                                                    </div>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="card-action">
+                            <button class="btn btn-success">Crear</button>
+                            <button class="btn btn-danger">Cancelar</button>
+                        </div>
+                    
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

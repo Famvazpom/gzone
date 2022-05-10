@@ -1,0 +1,13 @@
+.main-panel-landing
+{
+    position: relative;
+    width: 100%;
+    min-height: 100%;
+    float: right;
+    transition: all .3s;
+}
+
+.gzone-back
+{
+    background-image: url('/static/assets/img/gzone-logo.png') !important;
+}

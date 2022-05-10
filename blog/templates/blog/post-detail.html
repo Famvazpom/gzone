@@ -1,0 +1,64 @@
+{% extends "../layouts/base.html" %}
+
+
+{% block title %} BLOG {% endblock %} 
+
+
+{% block content %}
+    <div class='content'>
+        <div class='page-inner'>
+        <!-- Header -->
+            <div class="page-header">
+                <h4 class="page-title">Blog</h4>
+                <ul class="breadcrumbs">
+                    <li class="nav-home">
+                        <a href="{% url 'home' %}">
+                            <i class="flaticon-home"></i>
+                        </a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="{% url 'post-list' %}">Blog</a>
+                    </li>
+                    <li class="separator">
+                        <i class="flaticon-right-arrow"></i>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#">{{ object.titulo }}</a>
+                    </li>
+                </ul>
+            </div>
+
+        <!--Fin Header-->
+
+
+            <div class="row ">
+                <div class= "col">
+                <div class="card full-height">
+                        <img class="card-img-top banner" src="{{ object.imagen_banner }}" alt="Card image cap">
+                        <div class="card-body">
+                            <div class="card-title">{{ object.titulo }}</div>
+                            <div class="card-category">Daily information about statistics in system</div>
+                            <div class="d-flex h-100 flex-wrap justify-content-around pb-2 pt-4">
+                                {{ object.content | safe }}
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            {% if request.user.is_authenticated %}
+                            <div>
+                                <a class="btn btn-primary" href="{% url 'post-update' slug=object.slug %}">Editar</a>
+                            </div>
+                            {%endif%}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+{% endblock content %}
+
+{% block javascripts %}
+{% endblock javascripts %}

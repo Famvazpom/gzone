@@ -1,0 +1,63 @@
+		<!-- Sidebar -->
+	{% load static %}
+		<div class="sidebar sidebar-style-2" data-background-color="dark2">	
+			<div class="sidebar-wrapper scrollbar scrollbar-inner">
+				<div class="sidebar-content">
+
+				{% if request.user.is_authenticated %}	
+					<div class="user">
+						<div class="avatar-sm float-left mr-2">
+							{% if request.user.perfil.avatar %}
+								<img src="{{request.user.perfil.avatar.url }}" alt="..." class="avatar-img rounded-circle">
+							{% else %}
+								<img src="{% static 'assets/img/gzone-logo.png' %}" alt="..." class="avatar-img rounded-circle">
+							{% endif %}
+						</div>
+						<div class="info">
+							<a data-toggle="collapse" href="#collapseExample" aria-expanded="true">
+								<span>
+									{{ request.user.perfil.apodo }}
+									<span class="user-level">
+										{{ request.user.first_name }} {{ request.user.last_name }}
+									</span>
+									<span class="caret"></span>
+								</span>
+							</a>
+							<div class="clearfix"></div>
+
+							<div class="collapse in" id="collapseExample">
+								<ul class="nav">
+									<li>
+										<a href="{% url 'profile-update' %}">
+											<span class="link-collapse">Perfil</span>
+										</a>
+									</li>
+									<li>
+										<a href="">
+											<span class="link-collapse">Cerrar Sesion</span>
+										</a>
+									</li>
+								</ul>
+							</div>
+						</div>
+					</div>
+					<ul class="nav nav-primary">
+						<li class="nav-item {% if 'widgets' in segment %} active {% endif %}">
+							<a href="{% url 'post-list' %}">
+								<i class="fab fa-blogger-b"></i>
+								<p>Blog</p>
+							</a>
+						</li>
+						<li class="nav-item {% if 'widgets' in segment %} active {% endif %}">
+							<a href="{% url 'post-list' %}">
+								<i class="far fa-question-circle"></i>
+								<p>Quienes somos?</p>
+							</a>
+						</li>
+					</ul>				
+				{% endif %}	
+				</div>
+			</div>
+		</div>
+        <!-- End Sidebar -->
+        

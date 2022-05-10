@@ -1,0 +1,121 @@
+{% extends 'layouts/base.html' %}
+{% load widget_tweaks %}
+{% load static %}
+{% block content %}
+
+<div class="content">
+    <div class="page-inner">
+        <div class="page-header">
+            <h4 class="page-title">Perfil</h4>
+            <ul class="breadcrumbs">
+                <li class="nav-home">
+                    <a href="{% url 'home' %}">
+                        <i class="flaticon-home"></i>
+                    </a>
+                </li>
+                <li class="separator">
+                    <i class="flaticon-right-arrow"></i>
+                </li>
+                <li class="nav-item">
+                    <a href="#">Perfil</a>
+                </li>
+            </ul>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <form method='POST' enctype="multipart/form-data" >
+                    <div class="card">
+                        <div class="card-header">
+                            <div class="card-title">Modificar Perfil</div>
+                        </div>
+                        <div class="card-body">
+                            {% csrf_token %}
+                            {{ form_perfil.media }}
+                            <div class='form-row'>
+                                <div class='col'>
+                                    {{ form_usuario.first_name.label_tag }}
+                                    {% render_field form_usuario.first_name class='form-control' %}
+                                    {{ form_usuario.first_name.errors }}
+                                </div>
+                            
+                                <div class='col'>
+                                    {{ form_usuario.last_name.label_tag }}
+                                    {% render_field form_usuario.last_name class='form-control' %}
+                                    {{ form_usuario.last_name.errors }}
+                                </div>
+                            </div>
+
+                            <div class='form-row'>
+                                <div class='col'>
+                                    {{ form_perfil.apodo.label_tag }}
+                                    {% render_field form_perfil.apodo class='form-control' %}
+                                    {{ form_perfil.apodo.errors }}
+                                </div>
+                                <div class='col'>
+                                    {{ form_perfil.discord.label_tag }}
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="basic-addon1"><i class='fab fa-discord'></i></span>
+                                        </div>
+                                        {% render_field form_perfil.discord class='form-control' %}
+                                    </div>
+                                    {{ form_perfil.discord.errors }}
+                                </div>
+                            </div>
+                            <div class='form-row'>
+                                <div class ='col'>
+                                    <div class="avatar avatar-xxl">
+                                        {%if request.user.perfil.avatar%}
+                                            <img src="{{request.user.perfil.avatar.url}}" id="preview" class="avatar-img ">
+                                        {% else %}
+                                            <img src="{% static 'assets/img/gzone-logo.png' %}" id="preview" class="avatar-img ">
+                                        {%endif%}
+                                    </div>
+                                </div>
+                                 <div class='col'>
+                                    {{ form_perfil.avatar.label_tag }}
+                                    {% render_field form_perfil.avatar class='form-control' %}
+                                    {{ form_perfil.avatar.errors }}
+                                </div>
+                            </div>
+                            <div class = 'form-row'>
+                                <div class='col'>
+                                    {{ form_perfil.biografia.label_tag }}
+                                    {% render_field form_perfil.biografia class='form-control' %}
+                                    {{ form_perfil.biografia.errors }}
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="card-action">
+                            <button class="btn btn-success">Crear</button>
+                            <button class="btn btn-danger">Cancelar</button>
+                        </div>
+                    </div>
+                    
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block javascripts %}
+<script>
+    
+      $('#id_avatar').change(function(e) {
+        var fileName = e.target.files[0].name;
+        $("#file").val(fileName);
+      
+        var reader = new FileReader();
+        reader.onload = function(e) {
+          // get loaded data and render thumbnail.
+          document.getElementById("preview").src = e.target.result;
+        };
+        // read the image file as a data URL.
+        reader.readAsDataURL(this.files[0]);
+      });
+</script>
+
+{% endblock javascripts %}

@@ -1,0 +1,99 @@
+{% extends "../layouts/base.html" %}
+
+{% block title %} BLOG {% endblock %} 
+{% load static %}
+
+{% block content %}
+    <div class='content'>
+
+        <!-- Header -->
+        <div class="panel-header bg-primary-gradient">
+			<div class="page-inner py-5">
+				<div class="d-flex align-items-left align-items-md-center flex-column flex-md-row">
+					<div>
+						<h2 class="text-white pb-2 fw-bold">Blog</h2>
+						<h5 class="text-white op-7 mb-2">G - Zone | Unicaribe</h5>
+					</div>
+                    {% if request.user.is_authenticated %}
+                    <div class="ml-md-auto py-2 py-md-0">
+						<a href="{% url 'post-create' %}" class="btn btn-success btn-round"><i class='fas fa-check m-1'></i>Crear Post</a>
+					</div>
+                    {%endif%}
+				</div>
+                
+			</div>
+		</div>
+
+        <!--Fin Header-->
+
+
+        <div class="page-inner mt--5">
+            {% for item in object_list %}
+                {% if forloop.first or forloop.counter0|divisibleby:3 %}
+                    <div class='row'>
+                {%endif%}
+
+                <div class="col">
+                    <div class="card">
+                        {% if item.imagen_banner%}
+                            <img class="card-img-top" src="{{item.imagen_banner}}" alt="Card image cap">
+                        {% else %}
+                            <img class="card-img-top" src="{% static 'assets/img/gzone-logo.png' %}" alt="Card image cap">
+                        {% endif %}
+                        <div class="card-body">
+                            <h5 class="card-title">{{item.titulo}}</h5>
+                            <p class="card-text">{{ item.descripcion|safe }}</p>
+                            <a href="{% url 'post-detail' slug=item.slug %}" class="btn btn-primary">Leer Post</a>
+                        </div>
+                        <div class='card-footer'>
+                            {{ item.fecha }} | {{ item.autor }}
+                        </div>
+                    </div>
+                </div>
+                
+                {% if forloop.counter|divisibleby:3 or forloop.last%}
+                    </div>
+                {%endif%}
+            {% endfor %}
+            <ul class="pagination justify-content-center flex-wrap mt-2 mb-4">
+                {% load paginator_tags %}
+                
+                {% get_proper_elided_page_range paginator page_obj.number as page_range %} <!-- here -->
+                {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                {% else %}
+                    <li class="disabled page-item"><span class="page-link">&laquo;</span></li>
+                {% endif %}
+
+                {% for page_num in page_range %}
+                    {% if page_obj.number == page_num%}
+                        <li class="active page-item">
+                            <span class="page-link">{{page_num}}</span>
+                        </li>
+                    {% else %}
+                        {% if page_num == paginator.ELLIPSIS %}
+                            <li class="page-item">
+                                <span class="page-link">{{ paginator.ELLIPSIS }}</span>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{page_num}}">{{page_num}}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+                {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                {% else %}
+                    <li class="disabled page-item"><span class="page-link">&raquo;</span></li>
+                {% endif %}
+            </ul>
+
+        </div>
+    </div>
+    
+{% endblock content %}
+
+{% block javascripts %}
+{% endblock javascripts %}
